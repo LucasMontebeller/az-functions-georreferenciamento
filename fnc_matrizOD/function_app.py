@@ -1,5 +1,6 @@
 import azure.functions as func
 import logging
+from src.api.matrizOD_api import process_matrizOD
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
@@ -18,6 +19,14 @@ def get_matrizOD(req: func.HttpRequest) -> func.HttpResponse:
 
     if name:
         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    
+    # Teste de funcionamento
+    # elif req.method == 'POST':
+    #     op = req.params.get('op')
+    #     body, headers = process_matrizOD(op)
+    #     # Retornar o objeto BytesIO como resposta com os cabeçalhos configurados
+    #     return func.HttpResponse(body=body, headers=headers, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")  
+        
     else:
         return func.HttpResponse(
              "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response.",

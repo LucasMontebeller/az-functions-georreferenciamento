@@ -3,3 +3,14 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
+json
+geojson
+haversine
+osmnx
+geopandas
+shapely.geometry
+pandas
+networkx
+requests
+folium
+BytesIO
