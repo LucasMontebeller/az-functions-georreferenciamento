@@ -4,10 +4,11 @@ from io import BytesIO
 from src.utils.json_utils import save_dict_json, save_json
 from src.geoprocessing.matrixOD import generate_matrix_od
 from src.tests.scenarios import read_scen_complete
+import logging
 
 # Envio de arquivo - matriz OD distância
 def process_matrizOD(op):
-    if op == 'op3' or op=='op5':
+    if op == 'op3' or op=='op5' or 1 == 1:
         if op == 'op3':
             route_type = 'shortest'
             msg = 'shortest matrix, info=dist'
@@ -17,14 +18,22 @@ def process_matrizOD(op):
         
         # read data
         G, id_talhoes, id_regioes, entrada_regioes = read_scen_complete()
-        
+        route_type = 'fastest'
+        # logging.info(f'id_talhoes: {id_talhoes}')
+        # logging.info(f'id_regioes: {id_regioes}')
+        # logging.info(f'entrada_regioes: {entrada_regioes}')
+        # logging.info(f'Grafo: {G}')
+
         # Criar Matriz OD distância
         matrix_od, path_od = generate_matrix_od(G, id_talhoes, id_regioes, entrada_regioes, route_type)
-        print ('OD:', matrix_od)
+        # logging.info(f'matrix_od: {matrix_od}')
+
+        '''
         save_dict_json(matrix_od, os.path.join('output', 'matrix', route_type, 'matrix_od.json'))
         save_dict_json(path_od, os.path.join('output', 'matrix', route_type, 'path_od.json'))
         save_json(msg, os.path.join('output', 'matrix', route_type, 'info.json'))
         print (f"A matriz OD foi salve na pasta {os.path.join('output', 'matrix', route_type)}!")
+        '''
         
         # Combinado de salvar matriz completa para melhorar performance
         # Se quiser reduzir espaço de armazenagem, salvar shortest_paths_t_r, shortest_paths_r_r, shortest_paths_r_t
@@ -64,10 +73,12 @@ def process_matrizOD(op):
 
         # Criar um objeto BytesIO para armazenar os dados do Excel
         excel_bytes_io = BytesIO()
+        # logging.info(f'data: {data}')
 
         # Salvar o DataFrame no objeto BytesIO no formato Excel
         df.to_excel(excel_bytes_io, index=True, header=True, engine='openpyxl')
-
+        
+        '''
         # Salvar o objeto BytesIO em um arquivo Excel local
         save_bitesIO_to_excel(excel_bytes_io, os.path.join('output','matrix',route_type,'matrix_od.xlsx'))
 
@@ -76,8 +87,9 @@ def process_matrizOD(op):
         "Content-Type": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",  # Tipo de conteúdo Excel
         "Content-Disposition": "attachment; filename=output/matrix_od.xlsx"  # Nome do arquivo Excel
         }
+        '''
 
-    return excel_bytes_io.getvalue(), excel_headers        
+    return excel_bytes_io.getvalue() #, excel_headers        
 
 def save_bitesIO_to_excel(excel_bytes_io, filename):
     with open(filename, 'wb') as f:

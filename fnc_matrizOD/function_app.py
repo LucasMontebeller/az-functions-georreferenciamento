@@ -21,11 +21,10 @@ def get_matrizOD(req: func.HttpRequest) -> func.HttpResponse:
         return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
     
     # Teste de funcionamento
-    # elif req.method == 'POST':
-    #     op = req.params.get('op')
-    #     body, headers = process_matrizOD(op)
-    #     # Retornar o objeto BytesIO como resposta com os cabeçalhos configurados
-    #     return func.HttpResponse(body=body, headers=headers, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")  
+    elif req.method == 'POST':
+        op = req.params.get('op')
+        body = process_matrizOD(op)
+        return func.HttpResponse(body=body, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")  
         
     else:
         return func.HttpResponse(

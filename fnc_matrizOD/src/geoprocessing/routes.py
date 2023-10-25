@@ -110,11 +110,13 @@ def get_directions_route(coords_od, client = 1, route_type = 'fastest', directio
     # Formato:
         # lat_longs = [[(lat1, long1), (lat2, long2)]], 
         # client = 1 Azure, 2 Route and directions (rapidapi)
-
+    ''''
     [(lat1, long1), (lat2, long2)] = coords_od
     filename = os.path.join(directions_dir, route_type, str(lat1)+'_'+str(long1) +'_'+str(lat2) +'_'+str(long2)+'.json')
     directions =  load_json(filename)
     # if not directions: # Por favor, remova os comentários para acessar informações do serviço de API.
     #     directions = get_directions_response_azure(lat1, long1, lat2, long2, route_type)
     #     directions =  load_json(filename)
+    '''
+    directions = load_json('src/mock/directions.json') # mock
     return directions
