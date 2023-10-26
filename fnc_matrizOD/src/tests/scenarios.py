@@ -15,21 +15,20 @@ from src.utils.pickle_utils import load_graph
 def read_scen_data():
     
     # Lê dados dos talhões, das regiões e seus pontos de entrada, do ponto da oficinal central e vias (open street maps + vias customizadas)
-    # talhoes = load_geojson('../cenario/talhoes.geojson')
-    # regioes = load_geojson('../cenario/regioes.geojson')
-    entrada_regioes = load_geojson('src/mock/entrada_regioes.geojson')
-    # oficina_central = load_geojson('../cenario/oficina_central.geojson')
-    # merged_roads = load_geojson('../cenario/merged_roads.geojson')
+    talhoes = load_geojson('src/mock/geojson/talhoes.geojson')
+    regioes = load_geojson('src/mock/geojson/regioes.geojson')
+    entrada_regioes = load_geojson('src/mock/geojson/entrada_regioes.geojson')
+    oficina_central = load_geojson('src/mock/geojson/oficina_central.geojson')
+    merged_roads = load_geojson('src/mock/geojson/merged_roads.geojson')
 
-    # return (talhoes, regioes, entrada_regioes, oficina_central, merged_roads)
-    return entrada_regioes
+    return (talhoes, regioes, entrada_regioes, oficina_central, merged_roads)
 
 # Lê dados do cenário original e os dados processados
 def read_scen_complete():
     # talhoes, regioes, entrada_regioes, oficina_central, merged_roads = read_scen_data()
-    entrada_regioes = read_scen_data()
-    id_talhoes = load_json('src/mock/talhoes.json')
-    id_regioes = load_json('src/mock/regioes.json')
+    entrada_regioes = load_json('src/mock/geojson/entrada_regioes.geojson')
+    id_talhoes = load_json('src/mock/json/talhoes.json')
+    id_regioes = load_json('src/mock/json/regioes.json')
     G = load_graph('src/mock/graph.pickle')
     # entrada_talhoes = load_geojson(os.path.join('output','cenario','entrada_talhoes.geojson'))
     # centroides = load_geojson(os.path.join('output','cenario','centroides.geojson'))

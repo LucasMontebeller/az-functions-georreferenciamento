@@ -1,0 +1,36 @@
+{
+    "type": "FeatureCollection",
+    "name": "oficina_central",
+    "crs": {
+        "type": "name",
+        "properties": {
+            "name": "urn:ogc:def:crs:OGC:1.3:CRS84"
+        }
+    },
+    "features": [
+        {
+            "type": "Feature",
+            "properties": {
+                "Name": "T000_OC",
+                "descriptio": null,
+                "timestamp": null,
+                "begin": null,
+                "end": null,
+                "altitudeMo": null,
+                "tessellate": -1,
+                "extrude": 0,
+                "visibility": -1,
+                "drawOrder": null,
+                "icon": null
+            },
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -51.77314706892745,
+                    -20.980320059858951,
+                    0.0
+                ]
+            }
+        }
+    ]
+}

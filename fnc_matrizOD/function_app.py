@@ -1,6 +1,8 @@
 import azure.functions as func
 import logging
+import pickle
 from src.api.matrizOD_api import process_matrizOD
+from src.api.map_api import generate_az_map
 
 app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 
@@ -8,23 +10,23 @@ app = func.FunctionApp(http_auth_level=func.AuthLevel.FUNCTION)
 def get_matrizOD(req: func.HttpRequest) -> func.HttpResponse:
     logging.info('Python HTTP trigger function processed a request.')
 
-    name = req.params.get('name')
-    if not name:
-        try:
-            req_body = req.get_json()
-        except ValueError:
-            pass
-        else:
-            name = req_body.get('name')
+    action = req.params.get('action') # vem da url get-matrizOD?action=''
 
-    if name:
-        return func.HttpResponse(f"Hello, {name}. This HTTP triggered function executed successfully.")
+    # GET
+    if req.method == 'GET':
+        if action == 'map':
+            map = generate_az_map()
+            map_html = map.get_root().render()
+            return func.HttpResponse(map_html, mimetype="text/html")
     
-    # Teste de funcionamento
+    # POST
     elif req.method == 'POST':
-        op = req.params.get('op')
-        body = process_matrizOD(op)
-        return func.HttpResponse(body=body, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")  
+        # op = req.params.get('op')
+        # body = process_matrizOD(op)
+        with open('src/mock/graph.pickle', 'rb') as file:
+            data = pickle.load(file)
+        return func.HttpResponse(pickle.dumps(data), mimetype='application/octet-stream')
+        # return func.HttpResponse(body=body, mimetype="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")  
         
     else:
         return func.HttpResponse(
