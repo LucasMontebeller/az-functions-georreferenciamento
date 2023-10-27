@@ -179,11 +179,12 @@ def check_nodes_in_graph (G, id_nodes):
     # entrada_talhoes[0][0], entrada_talhoes[0][1]
 
     all_nodes_ids_present = all(node in G.nodes for node in id_nodes)
+    
+    if not all_nodes_ids_present:
+        return False
+    
+    return True
 
-    if all_nodes_ids_present:
-        print("Todos os nodes estão presentes em G.")
-    else:
-        print("Pelo menos um node não está presente em G.")
 
 def all_data_fields(G):
 

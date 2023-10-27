@@ -38,11 +38,10 @@ def create_shortest_or_fastest_paths (G, nodes_origem, nodes_destino, route_type
 # Gera matriz OD de distância entre regioes
 # Utilizando informações do Azure Maps
 def generate_matrix_od_btw_regions(id_regioes, entrada_regioes, route_type='fastest'):
-
     # Nesse caso, geraremos rotas de todos os pontos para todos os pontos. 
     # Porém nao há necessidade de gerar tudo para tudo, dependerá do plano de rotas.
 
-    r_origins =  r_destinations = id_regioes
+    r_origins = r_destinations = id_regioes
 
     coord_regioes = [(e["properties"]["y"],e["properties"]["x"]) for e in entrada_regioes]
     coord_r_origins = coord_r_destinations = coord_regioes
@@ -54,6 +53,7 @@ def generate_matrix_od_btw_regions(id_regioes, entrada_regioes, route_type='fast
                 coords_od = [coord_o, coord_d]
                 directions = get_directions_route(coords_od, client = 1, route_type=route_type)
                 od[(o, d)] = obtain_route_matrix(od, o, d, directions)
+    
     return od
 
 # Gera matriz OD entre cada talhão e o ponto de entrada da sua região (e vice-versa) 
@@ -153,12 +153,9 @@ def generate_matrix_od_complete(G, id_talhoes, paths_t_r, paths_r_r, paths_r_t, 
     return matrix_od, path_od
 
 def generate_matrix_od(G, id_talhoes, id_regioes, entrada_regioes, route_type):
-
     # Check se todos os nós estão presentes no grapho
-    check_nodes_in_graph (G, id_regioes) #'R001_T001'
-    check_nodes_in_graph (G, id_talhoes) #'R001'
-    
-    # test_and_simulate_unconnected_network_locations(G, source_node = 'R003_T003', target_node = 'R003_T002')
+    if not (check_nodes_in_graph(G, id_regioes) and check_nodes_in_graph(G, id_talhoes)):
+        return None
 
     paths_r_r = generate_matrix_od_btw_regions(id_regioes, entrada_regioes, route_type)
     paths_t_r, paths_r_t = generate_matrix_od_btw_plots_and_regions(G, id_talhoes, id_regioes, route_type)
